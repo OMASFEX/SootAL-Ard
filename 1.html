@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صوت الأرض</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #399f14; 
+            font-family: 'Alexandria', sans-serif;
+            margin: 0;
+            color: white;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+        }
+
+        /* --- شريط التنقل المطور --- */
+        #main-nav {
+            background-color: #006400;
+            width: 100%;
+            position: sticky; 
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            display: flex;
+            justify-content: space-between; /* توزيع المحتوى بين اليمين واليسار */
+            align-items: center;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        #nav-list {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            padding: 0;
+            margin: 0;
+            flex-grow: 1; /* لجعل القائمة تأخذ المساحة الوسطى */
+        }
+
+        .nav-item a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 15px 20px;
+            transition: 0.3s;
+            font-size: 14px;
+        }
+
+        .nav-item a:hover {
+            background-color: #6CC24A;
+        }
+
+        /* تنسيق أيقونة البروفايل الصغيرة في اليمين */
+        .profile-nav-item {
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
+        }
+
+        .profile-nav-item img {
+            width: 35px; /* حجم صغير متناسق */
+            height: 35px;
+            border-radius: 50%;
+            border: 2px solid #6CC24A;
+            object-fit: cover;
+            transition: 0.3s;
+        }
+
+        .profile-nav-item img:hover {
+            transform: scale(1.1);
+            border-color: white;
+        }
+
+        /* توازن التصميم (إضافة مساحة وهمية على اليسار ليبقى النيف بار متمركزاً) */
+        .nav-spacer {
+            width: 45px; 
+        }
+
+        /* --- شريط التمرير --- */
+        ::-webkit-scrollbar { width: 12px; }
+        ::-webkit-scrollbar-track { background: #e0f9d7; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #006400; border-radius: 10px; border: 2px solid #e0f9d7; }
+        ::-webkit-scrollbar-thumb:hover { background: #6CC24A; }
+
+        /* --- التنسيقات الأخرى كما هي في ملفك --- */
+        #header-wrapper { display: flex; align-items: center; justify-content: center; margin-top: 50px; width: 100%; }
+        #logo-image { height: 120px; width: auto; margin-left: 20px; }
+        #brand-text { display: flex; flex-direction: column; text-align: right; }
+        #site-name { font-size: 35px; font-weight: 700; margin: 0; }
+        #site-slogan { font-size: 18px; margin: 0; }
+        #welcome-section { text-align: center; margin-top: 40px; }
+        .welcome-title { font-size: 2.8rem; margin: 10px 0; }
+        #hero-section { display: flex; flex-direction: column; align-items: center; margin-top: 40px; }
+        #main-hero-img { max-width: 80%; border-radius: 20px; margin-bottom: 30px; }
+        #action-button { background-color: #006400; border: none; border-radius: 50px; padding: 15px 60px; font-size: 22px; color: white; cursor: pointer; transition: 0.3s; }
+        #action-button:hover { background-color: #6CC24A; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+
+    <nav id="main-nav">
+        <div class="nav-spacer"></div>
+
+        <ul id="nav-list">
+            <li class="nav-item"><a href="index.html">الصفحة الرئيسية</a></li>
+            <li class="nav-item"><a href="2.html">صوت الأرض</a></li>
+            <li class="nav-item"><a href="3.html">أسباب التغير المناخي</a></li>
+            <li class="nav-item"><a href="4.html">الحلول</a></li>
+            <li class="nav-item"><a href="5.html">أثر التغير</a></li>
+          <li class="nav-item"><a href="community.html">مجتمع صوت الأرض</a></li>      
+            <li class="nav-item"><a href="6.html">تواصل معنا</a></li>
+        </ul>
+
+        <div class="profile-nav-item">
+            <a href="profile.html">
+                <img id="navProfilePic" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Profile">
+            </a>
+        </div>
+    </nav>
+
+    <div id="header-wrapper">
+        <img src="logo.png" id="logo-image" alt="لوجو">
+        <div id="brand-text">
+            <h2 id="site-name">صوت الأرض</h2>
+            <p id="site-slogan">لأجـل حيـاة أفضــل</p>
+        </div>
+    </div>
+
+    <div id="welcome-section">
+        <h1 class="welcome-title">مرحبًا بك في موقع</h1>
+        <h1 class="welcome-title">التغير المناخي صوت الأرض🌍</h1>
+        <p style="color: #333; font-weight: bold;">⚠️ هذا الموقع مصمم للعمل بشكل أفضل على أجهزة الكمبيوتر.</p>
+    </div>
+
+    <div id="hero-section">
+        <img src="monkh.jpg" id="main-hero-img" alt="تغير المناخ">
+        <button id="action-button">اعرف المزيد</button>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+        // إعدادات Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyDQYxj6nuAX9BrRxwHWuY-VCB3FScnGfAI",
+            authDomain: "soot-al-ard.firebaseapp.com",
+            projectId: "soot-al-ard",
+            storageBucket: "soot-al-ard.firebasestorage.app",
+            messagingSenderId: "448390130400",
+            appId: "1:448390130400:web:d81ec6371b294a9c7cbe85"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        // جلب صورة البروفايل وتحديثها في النيف بار
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                const docSnap = await getDoc(doc(db, "users", user.uid));
+                if (docSnap.exists() && docSnap.data().photo) {
+                    document.getElementById('navProfilePic').src = docSnap.data().photo;
+                }
+            }
+        });
+
+        document.getElementById("action-button").onclick = function() {
+            window.location.href = "2.html";
+        };
+    </script>
+
+</body>
+</html>

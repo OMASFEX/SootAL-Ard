@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صوت الأرض - أسباب تغير المناخ</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* تخصيص شريط التمرير */
+        ::-webkit-scrollbar { width: 12px; }
+        ::-webkit-scrollbar-track { background: #f0ebe4; }
+        ::-webkit-scrollbar-thumb { background: #5d4037; border-radius: 10px; border: 2px solid #f0ebe4; }
+        ::-webkit-scrollbar-thumb:hover { background: #8d6e63; }
+
+        body {
+            background-color: #a1887f; 
+            font-family: 'Alexandria', sans-serif;
+            margin: 0;
+            color: #3e2723;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- شريط التنقل الاحترافي (نفس توزيع صفحة 2) --- */
+        #main-nav {
+            background-color: #3b2100; /* لون بني غامق يليق بالصفحة */
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        #nav-list {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            padding: 0;
+            margin: 0;
+            flex-grow: 1;
+        }
+
+        .nav-item a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 15px 20px;
+            transition: 0.3s;
+            font-size: 14px;
+        }
+
+        .nav-item a:hover {
+            background-color: #6CC24A;
+        }
+
+        /* أيقونة البروفايل في أقصى اليمين */
+        .profile-nav-item {
+            display: flex;
+            align-items: center;
+            order: 2;
+        }
+
+        .profile-nav-item img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 2px solid #6CC24A;
+            object-fit: cover;
+            transition: 0.3s;
+        }
+
+        .nav-spacer {
+            width: 45px; 
+            order: -1;
+        }
+
+        /* --- محتوى الصفحة --- */
+        .content-container {
+            margin-top: 100px;
+            max-width: 1000px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            margin-bottom: 50px;
+        }
+
+        .header-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #5d4037;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #3b2100;
+            display: inline-block;
+            width: 100%;
+            padding-bottom: 10px;
+        }
+
+        .reason-box {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 40px;
+            text-align: right;
+        }
+
+        #reason-img {
+            width: 400px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .text-side { flex: 1; }
+        .intro-p { font-size: 1.2rem; line-height: 1.7; margin-bottom: 20px; }
+
+        .reasons-list {
+            background: #f7f3f0;
+            padding: 25px;
+            border-radius: 15px;
+            border-right: 5px solid #3b2100;
+        }
+
+        .reasons-list h3 { margin-top: 0; color: #3b2100; }
+        .reasons-list ul { list-style: none; padding: 0; }
+        .reasons-list li { font-size: 1.1rem; margin: 15px 0; padding-right: 25px; position: relative; }
+        .reasons-list li::before { content: "•"; color: #3b2100; font-weight: bold; position: absolute; right: 0; font-size: 1.5rem; }
+
+        #next-button {
+            display: block;
+            margin: 30px auto 0 auto;
+            background-color: #3b2100;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 60px;
+            font-size: 20px;
+            color: white;
+            cursor: pointer;
+            font-family: 'Alexandria', sans-serif;
+            transition: 0.3s;
+        }
+
+        #next-button:hover { background-color: #6CC24A; transform: scale(1.05); }
+
+        @media (max-width: 768px) { .reason-box { flex-direction: column; } #reason-img { width: 100%; } }
+    </style>
+</head>
+<body>
+
+    <nav id="main-nav">
+        <div class="profile-nav-item">
+            <a href="profile.html">
+                <img id="navProfilePic" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Profile">
+            </a>
+        </div>
+
+        <ul id="nav-list">
+            <li class="nav-item"><a href="index.html">الصفحة الرئيسية</a></li>
+            <li class="nav-item"><a href="2.html">صوت الأرض</a></li>
+            <li class="nav-item"><a href="3.html">أسباب التغير المناخي</a></li>
+            <li class="nav-item"><a href="4.html">الحلول</a></li>
+            <li class="nav-item"><a href="5.html">أثر التغير</a></li>
+            <li class="nav-item"><a href="community.html">مجتمع صوت الأرض</a></li>
+            <li class="nav-item"><a href="6.html">تواصل معنا</a></li>
+        </ul>
+
+        <div class="nav-spacer"></div>
+    </nav>
+
+    <div class="content-container">
+        <h1 class="header-title">أسباب تغير المناخ</h1>
+
+        <div class="reason-box">
+            <img src="fire.png" id="reason-img" alt="تدمير البيئة">
+            <div class="text-side">
+                <p class="intro-p">
+                    تعتبر الأنشطة البشرية مثل إحراق الوقود الأحفوري (الفحم، النفط، الغاز الطبيعي) من أبرز أسباب التغير المناخي، حيث تؤدي إلى انبعاثات غازات دفيئة مثل ثاني أكسيد الكربون والميثان في الغلاف الجوي، مما يسهم في ارتفاع درجة حرارة كوكب الأرض.
+                </p>
+            </div>
+        </div>
+
+        <div class="reasons-list">
+            <h3>الأسباب الرئيسية لتغير المناخ:</h3>
+            <ul>
+                <li><strong>الاحتباس الحراري:</strong> زيادة الغازات الدفيئة التي تحبس الحرارة.</li>
+                <li><strong>النقل:</strong> انبعاثات السيارات والطائرات المعتمدة على الوقود.</li>
+                <li><strong>التلوث الصناعي:</strong> مخلفات الأنشطة الصناعية والمصانع الكبرى.</li>
+                <li><strong>إزالة الغابات:</strong> قلة الأشجار تؤدي إلى انخفاض قدرة الأرض على امتصاص الكربون.</li>
+            </ul>
+        </div>
+
+        <button id="next-button">اكتشف الحلول</button>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDQYxj6nuAX9BrRxwHWuY-VCB3FScnGfAI",
+            authDomain: "soot-al-ard.firebaseapp.com",
+            projectId: "soot-al-ard",
+            storageBucket: "soot-al-ard.firebasestorage.app",
+            messagingSenderId: "448390130400",
+            appId: "1:448390130400:web:d81ec6371b294a9c7cbe85"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                const docSnap = await getDoc(doc(db, "users", user.uid));
+                if (docSnap.exists() && docSnap.data().photo) {
+                    document.getElementById('navProfilePic').src = docSnap.data().photo;
+                }
+            }
+        });
+
+        document.getElementById("next-button").onclick = function() {
+            window.location.href = "4.html";
+        };
+    </script>
+</body>
+</html>

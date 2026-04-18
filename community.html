@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مجتمع صوت الأرض | نظام ردود متطور</title>
+    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #f0f2f5; font-family: 'Alexandria', sans-serif; margin: 0; color: #1c1e21; }
+        #main-nav { background-color: #006400; padding: 12px 5%; display: flex; justify-content: space-between; align-items: center; color: white; position: sticky; top: 0; z-index: 1000; }
+        #main-nav a { color: white; text-decoration: none; font-weight: bold; background: rgba(255,255,255,0.2); padding: 5px 15px; border-radius: 5px; }
+
+        .container { max-width: 600px; margin: 20px auto; padding: 0 10px; }
+        .publish-box { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        textarea { width: 100%; border: none; background: #f0f2f5; padding: 15px; border-radius: 8px; resize: none; font-family: 'Alexandria'; box-sizing: border-box; font-size: 16px; }
+        .publish-btn { background: #006400; color: white; border: none; padding: 10px 30px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 10px; float: left; }
+
+        .post-card { background: white; padding: 15px; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); position: relative; }
+        .post-header { display: flex; align-items: center; margin-bottom: 12px; }
+        .post-header img { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; margin-left: 12px; }
+        .delete-btn { position: absolute; left: 15px; top: 15px; color: #ff4d4d; cursor: pointer; font-size: 11px; border: 1px solid #ff4d4d; padding: 2px 6px; border-radius: 4px; }
+        
+        .actions { display: flex; border-top: 1px solid #eee; margin-top: 10px; padding-top: 10px; gap: 20px; }
+        .action-btn { cursor: pointer; color: #65676b; font-size: 14px; font-weight: bold; }
+        .liked { color: #006400; }
+
+        .comments-section { background: #f9f9f9; padding: 10px; border-radius: 8px; margin-top: 10px; }
+        .comment { margin-bottom: 10px; padding: 10px; background: white; border-radius: 8px; position: relative; border: 1px solid #eee; }
+        
+        /* تصميم الردود الشجري */
+        .replies-container { margin-right: 25px; border-right: 2px solid #006400; padding-right: 15px; margin-top: 8px; }
+        .reply { background: #f0f2f5; padding: 8px; border-radius: 8px; font-size: 13px; margin-bottom: 5px; position: relative; }
+        
+        .comment-input-box { display: flex; gap: 5px; margin-top: 10px; }
+        .comment-input-box input { flex: 1; padding: 8px; border-radius: 20px; border: 1px solid #ddd; font-size: 13px; }
+        
+        .reply-btn { font-size: 11px; color: #006400; cursor: pointer; margin-right: 10px; font-weight: bold; }
+        .del-sub-btn { color: #ff4d4d; cursor: pointer; font-size: 10px; margin-right: 8px; }
+    </style>
+</head>
+<body>
+
+    <nav id="main-nav">
+        <span style="font-weight: bold;">صوت الأرض 🌍</span>
+        <div><a href="profile.html">بروفايلي</a> <a href="index.html">الرئيسية</a></div>
+    </nav>
+
+    <div class="container">
+        <div class="publish-box">
+            <textarea id="postInput" rows="3" placeholder="ما هي فكرتك البيئية اليوم؟"></textarea>
+            <button class="publish-btn" id="publishBtn">نشر</button>
+            <div style="clear: both;"></div>
+        </div>
+        <div id="feed"></div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, doc, getDoc, updateDoc, deleteDoc, arrayUnion, arrayRemove, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDQYxj6nuAX9BrRxwHWuY-VCB3FScnGfAI",
+            authDomain: "soot-al-ard.firebaseapp.com",
+            projectId: "soot-al-ard",
+            storageBucket: "soot-al-ard.firebasestorage.app",
+            messagingSenderId: "448390130400",
+            appId: "1:448390130400:web:d81ec6371b294a9c7cbe85"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        let userProfile = null;
+        let lastPostsCount = -1;
+
+        onAuthStateChanged(auth, async (u) => {
+            if (u) {
+                const d = await getDoc(doc(db, "users", u.uid));
+                userProfile = d.exists() ? d.data() : { name: "مستخدم", photo: "" };
+            } else { window.location.href = "index.html"; }
+        });
+
+        // نشر بوست
+        document.getElementById('publishBtn').onclick = async () => {
+            const content = document.getElementById('postInput').value.trim();
+            if (!content) return;
+            await addDoc(collection(db, "posts"), {
+                content, authorId: auth.currentUser.uid, authorName: userProfile.name,
+                authorPhoto: userProfile.photo, likes: [], comments: [], createdAt: serverTimestamp()
+            });
+            document.getElementById('postInput').value = "";
+        };
+
+        // عرض الداتا لحظياً
+        onSnapshot(query(collection(db, "posts"), orderBy("createdAt", "desc")), (snap) => {
+            const feed = document.getElementById('feed');
+            feed.innerHTML = "";
+            
+            snap.forEach((postDoc) => {
+                const post = postDoc.data();
+                const postId = postDoc.id;
+                const isOwner = auth.currentUser?.uid === post.authorId;
+                const isLiked = post.likes?.includes(auth.currentUser?.uid);
+
+                const postEl = document.createElement('div');
+                postEl.className = "post-card";
+                postEl.innerHTML = `
+                    ${isOwner ? `<span class="delete-btn" onclick="window.deletePost('${postId}')">حذف البوست</span>` : ''}
+                    <div class="post-header">
+                        <img src="${post.authorPhoto || 'https://cdn-icons-png.flaticon.com/512/149/149071.png'}">
+                        <div><b>${post.authorName}</b><span>${post.createdAt?.toDate().toLocaleString('ar-EG') || 'الآن'}</span></div>
+                    </div>
+                    <div class="post-content">${post.content}</div>
+                    
+                    <div class="actions">
+                        <span class="action-btn ${isLiked ? 'liked' : ''}" onclick="window.toggleLike('${postId}', ${isLiked})">👍 لايك (${post.likes?.length || 0})</span>
+                    </div>
+
+                    <div class="comments-section">
+                        ${post.comments?.map((c, cIdx) => `
+                            <div class="comment">
+                                <b>${c.userName}:</b> ${c.text} 
+                                <span class="reply-btn" onclick="window.showReplyInput('${postId}', ${cIdx}, '${c.userName}')">رد</span>
+                                ${c.userId === auth.currentUser?.uid ? `<span class="del-sub-btn" onclick="window.deleteComment('${postId}', ${cIdx})">حذف</span>` : ''}
+                                
+                                <div class="replies-container">
+                                    ${c.replies?.map((r, rIdx) => `
+                                        <div class="reply">
+                                            <b>${r.userName}:</b> ${r.text}
+                                            <span class="reply-btn" style="font-size:10px;" onclick="window.showReplyInput('${postId}', ${cIdx}, '${r.userName}')">رد</span>
+                                            ${r.userId === auth.currentUser?.uid ? `<span class="del-sub-btn" onclick="window.deleteReply('${postId}', ${cIdx}, ${rIdx})">حذف</span>` : ''}
+                                        </div>
+                                    `).join('') || ''}
+                                </div>
+
+                                <div id="reply-box-${postId}-${cIdx}" style="display:none; margin-top:5px;">
+                                    <input type="text" id="reply-input-${postId}-${cIdx}" placeholder="اكتب ردك..." style="width:75%; font-size:11px; border-radius:10px; border:1px solid #ddd; padding:5px;">
+                                    <button onclick="window.addReply('${postId}', ${cIdx})" style="font-size:10px; background:#006400; color:white; border:none; padding:5px 10px; border-radius:5px; cursor:pointer;">إرسال</button>
+                                </div>
+                            </div>
+                        `).join('') || ''}
+                        
+                        <div class="comment-input-box">
+                            <input type="text" placeholder="اكتب تعليقاً..." id="input-${postId}">
+                            <button onclick="window.addComment('${postId}')">تعليق</button>
+                        </div>
+                    </div>
+                `;
+                feed.appendChild(postEl);
+            });
+        });
+
+        // --- الدوال العالمية المحدثة ---
+
+        window.deletePost = async (id) => { if(confirm("حذف المنشور نهائياً؟")) await deleteDoc(doc(db, "posts", id)); };
+
+        window.toggleLike = async (id, isLiked) => {
+            await updateDoc(doc(db, "posts", id), { likes: isLiked ? arrayRemove(auth.currentUser.uid) : arrayUnion(auth.currentUser.uid) });
+        };
+
+        window.addComment = async (id) => {
+            const txt = document.getElementById(`input-${id}`).value;
+            if(!txt) return;
+            await updateDoc(doc(db, "posts", id), {
+                comments: arrayUnion({ userId: auth.currentUser.uid, userName: userProfile.name, text: txt, replies: [], date: new Date() })
+            });
+            document.getElementById(`input-${id}`).value = "";
+        };
+
+        window.showReplyInput = (postId, cIdx, name) => {
+            const box = document.getElementById(`reply-box-${postId}-${cIdx}`);
+            const input = document.getElementById(`reply-input-${postId}-${cIdx}`);
+            box.style.display = 'block';
+            input.value = `@${name} `; // منشن تلقائي
+            input.focus();
+        };
+
+        window.addReply = async (postId, cIdx) => {
+            const input = document.getElementById(`reply-input-${postId}-${cIdx}`);
+            const txt = input.value.trim();
+            if(!txt) return;
+
+            const postRef = doc(db, "posts", postId);
+            const postSnap = await getDoc(postRef);
+            const comments = postSnap.data().comments;
+            
+            comments[cIdx].replies.push({
+                userId: auth.currentUser.uid,
+                userName: userProfile.name,
+                text: txt,
+                date: new Date()
+            });
+
+            await updateDoc(postRef, { comments: comments });
+            input.value = "";
+            document.getElementById(`reply-box-${postId}-${cIdx}`).style.display = 'none';
+        };
+
+        // حذف رد محدد
+        window.deleteReply = async (postId, cIdx, rIdx) => {
+            if(!confirm("هل تريد حذف ردك؟")) return;
+            const postRef = doc(db, "posts", postId);
+            const postSnap = await getDoc(postRef);
+            const comments = postSnap.data().comments;
+            comments[cIdx].replies.splice(rIdx, 1);
+            await updateDoc(postRef, { comments: comments });
+        };
+
+        window.deleteComment = async (postId, cIdx) => {
+            if(!confirm("حذف التعليق بكل ردوده؟")) return;
+            const postRef = doc(db, "posts", postId);
+            const postSnap = await getDoc(postRef);
+            const comments = postSnap.data().comments;
+            comments.splice(cIdx, 1);
+            await updateDoc(postRef, { comments: comments });
+        };
+    </script>
+</body>
+</html>

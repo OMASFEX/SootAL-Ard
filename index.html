@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صوت الأرض - تسجيل الدخول</title>
+    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { margin: 0; font-family: 'Alexandria', sans-serif; background: linear-gradient(135deg, #004d00, #000); height: 100vh; display: flex; justify-content: center; align-items: center; color: white; }
+        .login-card { background: rgba(239, 228, 228, 0.1); backdrop-filter: blur(10px); padding: 40px; border-radius: 20px; border: 1px solid #6CC24A; width: 90%; max-width: 350px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        h1 { color: #f1f4f0; margin-bottom: 5px; }
+        p { font-size: 14px; color: #ccc; margin-bottom: 25px; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: none; box-sizing: border-box; font-family: 'Alexandria'; color: #333; }
+        button { width: 100%; padding: 12px; margin-top: 10px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold; font-family: 'Alexandria'; transition: 0.3s; }
+        .btn-login { background: #6CC24A; color: white; }
+        .btn-signup { background: transparent; border: 1px solid #6CC24A; color: #6CC24A; }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        <h1>صوت الأرض</h1>
+        <p>بوابتك للمشاركة في حماية كوكبنا</p>
+        <input type="email" id="email" placeholder="البريد الإلكتروني">
+        <input type="password" id="password" placeholder="كلمة المرور">
+        <button class="btn-login" id="loginBtn">دخول</button>
+        <button class="btn-signup" id="signupBtn">إنشاء حساب جديد</button>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+
+    <script>
+        // إعدادات مشروعك من الصورة
+        const firebaseConfig = {
+            apiKey: "AIzaSyDQYxj6nuAX9BrRxwHWuY-VCB3FScnGfAI",
+            authDomain: "soot-al-ard.firebaseapp.com",
+            projectId: "soot-al-ard",
+            storageBucket: "soot-al-ard.firebasestorage.app",
+            messagingSenderId: "448390130400",
+            appId: "1:448390130400:web:d81ec6371b294a9c7cbe85"
+        };
+
+        // تهيئة Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // وظيفة إنشاء حساب
+        document.getElementById('signupBtn').addEventListener('click', () => {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if(!email || !password) { alert("من فضلك ادخل البيانات"); return; }
+            
+            auth.createUserWithEmailAndPassword(email, password)
+                .then(() => {
+                    alert("تم إنشاء الحساب بنجاح!");
+                    window.location.href = "1.html"; // التوجيه لصفحتك
+                })
+                .catch((error) => { alert("خطأ: " + error.message); });
+        });
+
+        // وظيفة تسجيل الدخول
+        document.getElementById('loginBtn').addEventListener('click', () => {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            auth.signInWithEmailAndPassword(email, password)
+                .then(() => {
+                    window.location.href = "1.html"; // التوجيه لصفحتك
+                })
+                .catch((error) => { alert("خطأ في الدخول: " + error.message); });
+        });
+    </script>
+</body>
+</html>

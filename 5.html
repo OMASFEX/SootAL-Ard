@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صوت الأرض - أثر تغير المناخ</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* تخصيص شريط التمرير */
+        ::-webkit-scrollbar { width: 12px; }
+        ::-webkit-scrollbar-track { background: #fff3e0; }
+        ::-webkit-scrollbar-thumb { background: #e65100; border-radius: 10px; border: 2px solid #fff3e0; }
+        ::-webkit-scrollbar-thumb:hover { background: #ff9800; }
+
+        body {
+            background-color: #341d00f8; 
+            font-family: 'Alexandria', sans-serif;
+            margin: 0;
+            color: #ffffff;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- شريط التنقل الموحد (الأيقونة في اليمين) --- */
+        #main-nav {
+            background-color: #1a0f00;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        #nav-list {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            padding: 0;
+            margin: 0;
+            flex-grow: 1;
+        }
+
+        .nav-item a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 15px 20px;
+            transition: 0.3s;
+            font-size: 14px;
+        }
+
+        .nav-item a:hover { background-color: #6CC24A; }
+
+        /* أيقونة البروفايل في أقصى اليمين */
+        .profile-nav-item {
+            display: flex;
+            align-items: center;
+            order: 2;
+        }
+
+        .profile-nav-item img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 2px solid #6CC24A;
+            object-fit: cover;
+            transition: 0.3s;
+        }
+
+        .nav-spacer {
+            width: 45px; 
+            order: -1;
+        }
+
+        /* --- محتوى الصفحة --- */
+        .content-container {
+            margin-top: 100px;
+            max-width: 1000px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        .header-title {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #ff9800;
+        }
+
+        .impact-gallery {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .impact-card {
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            padding: 15px;
+            border-radius: 20px;
+            flex: 1;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .impact-card img {
+            width: 100%;
+            border-radius: 15px;
+            margin-bottom: 15px;
+        }
+
+        .threat-box {
+            background: #e65100;
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        #next-button {
+            background-color: #6CC24A;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 70px;
+            font-size: 20px;
+            color: white;
+            cursor: pointer;
+            font-family: 'Alexandria', sans-serif;
+            transition: 0.3s;
+        }
+
+        #next-button:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(108, 194, 74, 0.4); }
+
+        @media (max-width: 768px) { .impact-gallery { flex-direction: column; } }
+    </style>
+</head>
+<body>
+
+    <nav id="main-nav">
+        <div class="profile-nav-item">
+            <a href="profile.html">
+                <img id="navProfilePic" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Profile">
+            </a>
+        </div>
+
+        <ul id="nav-list">
+            <li class="nav-item"><a href="index.html">الصفحة الرئيسية</a></li>
+            <li class="nav-item"><a href="2.html">صوت الأرض</a></li>
+            <li class="nav-item"><a href="3.html">أسباب التغير المناخي</a></li>
+            <li class="nav-item"><a href="4.html">الحلول</a></li>
+            <li class="nav-item"><a href="5.html">أثر التغير</a></li>
+            <li class="nav-item"><a href="community.html">مجتمع صوت الأرض</a></li>
+            <li class="nav-item"><a href="6.html">تواصل معنا</a></li>
+        </ul>
+
+        <div class="nav-spacer"></div>
+    </nav>
+
+    <div class="content-container">
+        <h1 class="header-title">أثر تغير المناخ على الكائنات الحية</h1>
+
+        <div class="impact-gallery">
+            <div class="impact-card">
+                <img src="mother.jpg" alt="أثر إنساني">
+                <p>تأثر المجتمعات البشرية ونقص الموارد المائية</p>
+            </div>
+            <div class="impact-card">
+                <img src="animals.png" alt="جفاف الحيوانات">
+                <p>فقدان الموائل الطبيعية والجفاف الذي يهدد الحيوانات</p>
+            </div>
+        </div>
+
+        <div class="threat-box">
+            تغير المناخ ليس مجرد أرقام، بل هو تهديد مباشر لحياة الإنسان والحيوان على حد سواء. ارتفاع درجات الحرارة يؤدي إلى جفاف الأراضي الخصبة وهجرة الكائنات من بيئتها الطبيعية، مما يقلل من التنوع البيولوجي ويهدد أمننا الغذائي.
+        </div>
+
+        <button id="next-button">تواصل معنا للمشاركة</button>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDQYxj6nuAX9BrRxwHWuY-VCB3FScnGfAI",
+            authDomain: "soot-al-ard.firebaseapp.com",
+            projectId: "soot-al-ard",
+            storageBucket: "soot-al-ard.firebasestorage.app",
+            messagingSenderId: "448390130400",
+            appId: "1:448390130400:web:d81ec6371b294a9c7cbe85"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                const docSnap = await getDoc(doc(db, "users", user.uid));
+                if (docSnap.exists() && docSnap.data().photo) {
+                    document.getElementById('navProfilePic').src = docSnap.data().photo;
+                }
+            }
+        });
+
+        document.getElementById("next-button").onclick = function() {
+            window.location.href = "6.html";
+        };
+    </script>
+</body>
+</html>

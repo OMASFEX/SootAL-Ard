@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صوت الأرض - حلول التغير المناخي</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* تخصيص شريط التمرير */
+        ::-webkit-scrollbar { width: 12px; }
+        ::-webkit-scrollbar-track { background: #e1f5fe; }
+        ::-webkit-scrollbar-thumb { background: #301b00; border-radius: 10px; border: 2px solid #e1f5fe; }
+        ::-webkit-scrollbar-thumb:hover { background: #301b00; }
+
+        body {
+            background-color: #3e2300; 
+            font-family: 'Alexandria', sans-serif;
+            margin: 0;
+            color: #301b00;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- شريط التنقل الموحد (الأيقونة في اليمين) --- */
+        #main-nav {
+            background-color: #301b00; /* لون بني متناسق مع الصفحة */
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        #nav-list {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            padding: 0;
+            margin: 0;
+            flex-grow: 1;
+        }
+
+        .nav-item a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 15px 20px;
+            transition: 0.3s;
+            font-size: 14px;
+        }
+
+        .nav-item a:hover { background-color: #6CC24A; }
+
+        /* أيقونة البروفايل في أقصى اليمين */
+        .profile-nav-item {
+            display: flex;
+            align-items: center;
+            order: 2;
+        }
+
+        .profile-nav-item img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 2px solid #6CC24A;
+            object-fit: cover;
+            transition: 0.3s;
+        }
+
+        .nav-spacer {
+            width: 45px; 
+            order: -1;
+        }
+
+        /* --- محتوى الصفحة --- */
+        .content-container {
+            margin-top: 100px;
+            max-width: 1100px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            margin-bottom: 50px;
+        }
+
+        .header-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #301b00;
+            margin-bottom: 30px;
+            border-bottom: 4px solid #301b00;
+            display: inline-block;
+            width: 100%;
+            padding-bottom: 15px;
+        }
+
+        .solution-section {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        #solution-img {
+            width: 450px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .solutions-grid { flex: 1; }
+
+        .solution-card {
+            background: #bdbdbd;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            border-right: 5px solid #301b00;
+            transition: 0.3s;
+            text-align: right;
+        }
+
+        .solution-card:hover {
+            transform: translateX(-10px);
+            background: #6CC24A;
+            color: white;
+        }
+
+        .solution-card h3 { margin: 0 0 10px 0; font-size: 1.2rem; }
+        .solution-card p { margin: 0; font-size: 1rem; line-height: 1.6; }
+
+        .individual-actions {
+            background: #301b00;
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #next-button {
+            display: block;
+            margin: 40px auto 0 auto;
+            background-color: #301b00;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 70px;
+            font-size: 20px;
+            color: white;
+            cursor: pointer;
+            font-family: 'Alexandria', sans-serif;
+            transition: 0.3s;
+        }
+
+        #next-button:hover { background-color: #6CC24A; transform: scale(1.05); }
+
+        @media (max-width: 900px) { .solution-section { flex-direction: column; } #solution-img { width: 100%; } }
+    </style>
+</head>
+<body>
+
+    <nav id="main-nav">
+        <div class="profile-nav-item">
+            <a href="profile.html">
+                <img id="navProfilePic" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Profile">
+            </a>
+        </div>
+
+        <ul id="nav-list">
+            <li class="nav-item"><a href="index.html">الصفحة الرئيسية</a></li>
+            <li class="nav-item"><a href="2.html">صوت الأرض</a></li>
+            <li class="nav-item"><a href="3.html">أسباب التغير المناخي</a></li>
+            <li class="nav-item"><a href="4.html">الحلول</a></li>
+            <li class="nav-item"><a href="5.html">أثر التغير</a></li>
+            <li class="nav-item"><a href="community.html">مجتمع صوت الأرض</a></li>
+            <li class="nav-item"><a href="6.html">تواصل معنا</a></li>
+        </ul>
+
+        <div class="nav-spacer"></div>
+    </nav>
+
+    <div class="content-container">
+        <h1 class="header-title">الحلول لمكافحة تغير المناخ</h1>
+
+        <div class="solution-section">
+            <div class="solutions-grid">
+                <div class="solution-card">
+                    <h3>التحول للطاقة النظيفة</h3>
+                    <p>الاعتماد على الطاقة الشمسية، الرياح، والطاقة المائية بدلاً من الوقود الأحفوري لتقليل الانبعاثات الضارة.</p>
+                </div>
+                <div class="solution-card">
+                    <h3>إعادة التدوير</h3>
+                    <p>تقليل النفايات وتعزيز التدوير من خلال جمع واستخدام المواد بشكل مستدام لتقليل الضغط على الموارد الطبيعية.</p>
+                </div>
+                <div class="solution-card">
+                    <h3>الزراعة المستدامة</h3>
+                    <p>التوسع في زراعة الأشجار والنباتات التي تساعد في امتصاص الكربون وتحسين جودة الهواء.</p>
+                </div>
+            </div>
+            <img src="green.jpg" id="solution-img" alt="الحلول في يدنا">
+        </div>
+
+        <div class="individual-actions">
+            <h3>ماذا يمكنك أن تفعل كفرد؟</h3>
+            <p>تقليل الاستخدام الشخصي للطاقة، استخدام وسائل النقل العامة أو الدراجات، والتقليل من النفايات البلاستيكية.</p>
+        </div>
+
+        <button id="next-button">شاهد الأثر على الكائنات</button>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDQYxj6nuAX9BrRxwHWuY-VCB3FScnGfAI",
+            authDomain: "soot-al-ard.firebaseapp.com",
+            projectId: "soot-al-ard",
+            storageBucket: "soot-al-ard.firebasestorage.app",
+            messagingSenderId: "448390130400",
+            appId: "1:448390130400:web:d81ec6371b294a9c7cbe85"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                const docSnap = await getDoc(doc(db, "users", user.uid));
+                if (docSnap.exists() && docSnap.data().photo) {
+                    document.getElementById('navProfilePic').src = docSnap.data().photo;
+                }
+            }
+        });
+
+        document.getElementById("next-button").onclick = function() {
+            window.location.href = "5.html";
+        };
+    </script>
+</body>
+</html>

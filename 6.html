@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="موقع صوت الأرض هو موقع تم عمله لمسابقة جائزة الدولة للمبدع الصغير و فكرة الموقع بسيطة و من ضمن المواضيع الحيوية و هي تغير المناخ ">
+    <meta name="keywords" content="صوت الأرض , تغير المناخ , معلومات عن تغير المناخ , معلومات عامة , المناخ , المواضيع الحيوية , مسابقات">
+    <title>تواصل معنا</title>
+    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        /* شريط التمرير */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: green; border-radius: 10px; }
+
+        body {
+            background-color: black;
+            font-family: "Alexandria", serif;
+            margin: 0;
+            color: aliceblue;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* شريط التنقل */
+        nav {
+            background-color: green;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+            text-align: center;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: space-around;
+            padding: 0;
+            margin: 0;
+        }
+        nav li { padding: 10px; }
+        nav a {
+            color: #f2f2f2;
+            text-decoration: none;
+            padding: 14px 16px;
+            transition: 0.3s;
+        }
+        nav a:hover { background-color: #ddd; color: black; }
+
+        /* حاوية المحتوى */
+        .container {
+            margin-top: 100px;
+            width: 90%;
+            max-width: 900px;
+            text-align: center;
+        }
+
+        .logo-section img { height: 200px; margin-bottom: 20px; }
+        .header-text h1 { font-size: 50px; margin: 5px 0; color: white; }
+        .header-text h2 { font-size: 25px; color: #00880b; margin-bottom: 30px; }
+
+        /* منطقة التواصل */
+        .contact-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid green;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            text-align: right;
+        }
+
+        .info-side { flex: 1; min-width: 300px; margin-bottom: 20px; }
+        .info-side p { font-size: 22px; margin: 10px 0; }
+
+        /* نموذج الإرسال */
+        .form-side { flex: 1; min-width: 300px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group input, .form-group textarea {
+            width: 100%; padding: 12px; border-radius: 10px; border: none;
+            font-family: "Alexandria", serif; font-size: 16px;
+        }
+        
+        button {
+            background-color: green;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: "Alexandria", serif;
+            transition: 0.3s;
+        }
+        button:hover { background-color: #00bb00; transform: scale(1.05); }
+
+        .footer-name { font-size: 35px; margin-top: 50px; color: white; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">الصفحة الرئيسية</a></li>
+            <li><a href="2.html">صوت الأرض</a></li>
+            <li><a href="3.html">أسباب التغير المناخي</a></li>
+            <li><a href="4.html">الحلول</a></li>
+            <li><a href="5.html">أثر التغير</a></li>
+            <li class="nav-item"><a href="community.html">مجتمع صوت الأرض</a></li>
+            <li><a href="6.html">تواصل معنا</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="logo-section">
+            <img src="logo.png" alt="شعار صوت الأرض">
+            <div class="header-text">
+                <h1>صوت الأرض</h1>
+                <h2>لأجــل حـيــاة أفـضــل</h2>
+            </div>
+        </div>
+
+        <div class="contact-box">
+            <div class="info-side">
+                <h2 style="color: green;">بيانات التواصل</h2>
+                <p>📞 0120-639-1691</p>
+                <p>✉️ omarsameh.co@gmail.com</p>
+            </div>
+
+            <div class="form-side">
+                <form action="https://formspree.io/f/mykljwlq" method="POST">
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="اسمك" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="بريدك الإلكتروني" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="message" rows="4" placeholder="اكتب رسالتك أو شكوتك أو إقتراحك هنا " required></textarea>
+                    </div>
+                    <button type="submit">إرسال الرسالة</button>
+                </form>
+            </div>
+        </div>
+
+        <h1 class="footer-name">مشروع مقدم من الطالب/ عمر سامح مسعد عوض</h1>
+    </div>
+
+</body>
+</html>

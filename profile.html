@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بروفايلي | صوت الأرض</title>
+    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #f0f2f5; font-family: 'Alexandria', sans-serif; margin: 0; color: #1c1e21; }
+        #main-nav { background-color: #006400; padding: 12px 5%; display: flex; justify-content: space-between; align-items: center; color: white; position: sticky; top: 0; z-index: 1000; }
+        .nav-left { display: flex; align-items: center; gap: 15px; }
+        #main-nav a { color: white; text-decoration: none; font-weight: bold; background: rgba(255,255,255,0.2); padding: 5px 15px; border-radius: 5px; font-size: 14px; }
+
+        /* ستايل الجرس */
+        .noti-btn { position: relative; cursor: pointer; font-size: 20px; }
+        .noti-badge { position: absolute; top: -5px; right: -8px; background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 10px; display: none; font-weight: bold; }
+        .noti-dropdown { position: absolute; top: 40px; left: 0; background: white; width: 280px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); border-radius: 8px; display: none; z-index: 2000; color: black; max-height: 400px; overflow-y: auto; text-align: right; }
+        .noti-item { padding: 12px; border-bottom: 1px solid #eee; font-size: 13px; }
+
+        .profile-header { background-color: white; width: 100%; display: flex; flex-direction: column; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding-bottom: 20px; }
+        .cover-photo { width: 100%; max-width: 940px; height: 180px; background: linear-gradient(to bottom, #6CC24A, #006400); border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; }
+        .profile-info-section { width: 90%; max-width: 900px; display: flex; flex-direction: column; align-items: center; margin-top: -80px; }
+        #profileDisplayImg { width: 150px; height: 150px; border-radius: 50%; border: 4px solid white; background-color: #eee; object-fit: cover; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        
+        .container { display: flex; flex-direction: column; align-items: center; width: 100%; padding: 20px 0; }
+        .edit-box { background: white; width: 90%; max-width: 500px; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 30px; }
+        
+        /* ستايل المنشورات مع التفاعلات */
+        .profile-post-card { background: white; width: 100%; padding: 15px; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border-right: 5px solid #006400; box-sizing: border-box; }
+        .post-stats { font-size: 12px; color: #65676b; margin-top: 10px; border-top: 1px solid #eee; padding-top: 8px; }
+        .post-comments-preview { font-size: 11px; background: #f9f9f9; padding: 8px; border-radius: 8px; margin-top: 8px; }
+
+        .save-btn { background: #006400; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 15px; }
+        input, textarea { width: 100%; padding: 10px; margin-top: 10px; border: 1px solid #ddd; border-radius: 8px; font-family: 'Alexandria'; }
+    </style>
+</head>
+<body>
+
+    <nav id="main-nav">
+        <span style="font-weight: bold;">صوت الأرض 🌍</span>
+        <div class="nav-left">
+            <div class="noti-btn" id="notiTrigger">
+                🔔 <span id="notiCount" class="noti-badge">0</span>
+                <div class="noti-dropdown" id="notiBox">
+                    <div style="padding:10px; font-weight:bold; border-bottom:2px solid #006400;">الإشعارات</div>
+                    <div id="notiList"></div>
+                </div>
+            </div>
+            <a href="community.html">المجتمع</a>
+            <a href="index.html">الرئيسية</a>
+        </div>
+    </nav>
+
+    <div class="profile-header">
+        <div class="cover-photo"></div>
+        <div class="profile-info-section">
+            <img id="profileDisplayImg" src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
+            <h1 id="userNameDisplay">...</h1>
+            <p id="userBioDisplay">جاري التحميل...</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="edit-box">
+            <h3 style="margin:0">تعديل الملف الشخصي</h3>
+            <input type="text" id="imgUrlInput" placeholder="رابط صورة البروفايل">
+            <input type="text" id="nameInput" placeholder="الاسم الكامل">
+            <textarea id="bioInput" placeholder="اكتب نبذة عنك..." rows="2"></textarea>
+            <button class="save-btn" id="saveBtn">حفظ التغييرات</button>
+            <p id="statusMsg" style="text-align:center; font-size:12px; margin-top:10px"></p>
+        </div>
+
+        <div style="width:90%; max-width:600px">
+            <h2 style="font-size:18px">منشوراتي وتفاعلاتها</h2>
+            <div id="postsList"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getFirestore, doc, getDoc, setDoc, collection, query, where, onSnapshot, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDQYxj6nuAX9BrRxwHWuY-VCB3FScnGfAI",
+            authDomain: "soot-al-ard.firebaseapp.com",
+            projectId: "soot-al-ard",
+            storageBucket: "soot-al-ard.firebasestorage.app",
+            messagingSenderId: "448390130400",
+            appId: "1:448390130400:web:d81ec6371b294a9c7cbe85"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        // فتح وإغلاق قائمة الإشعارات
+        document.getElementById('notiTrigger').onclick = (e) => {
+            const box = document.getElementById('notiBox');
+            box.style.display = box.style.display === 'block' ? 'none' : 'block';
+            e.stopPropagation();
+        };
+        window.onclick = () => document.getElementById('notiBox').style.display = 'none';
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                // 1. تحميل بيانات البروفايل
+                const d = await getDoc(doc(db, "users", user.uid));
+                if(d.exists()){
+                    const data = d.data();
+                    document.getElementById('userNameDisplay').innerText = data.name || "مستخدم";
+                    document.getElementById('userBioDisplay').innerText = data.bio || "";
+                    document.getElementById('profileDisplayImg').src = data.photo || "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+                    document.getElementById('nameInput').value = data.name || "";
+                    document.getElementById('bioInput').value = data.bio || "";
+                    document.getElementById('imgUrlInput').value = data.photo || "";
+                }
+
+                // 2. نظام الإشعارات (الجرس)
+                const qNoti = query(collection(db, "notifications"), where("toUserId", "==", user.uid), orderBy("createdAt", "desc"));
+                onSnapshot(qNoti, (snap) => {
+                    const list = document.getElementById('notiList');
+                    const badge = document.getElementById('notiCount');
+                    list.innerHTML = snap.empty ? "<p style='padding:15px'>لا توجد إشعارات</p>" : "";
+                    let unread = 0;
+                    snap.forEach(doc => {
+                        const n = doc.data();
+                        if(n.status === "unread") unread++;
+                        list.innerHTML += `<div class="noti-item"><b>${n.fromName}</b> ${n.message}</div>`;
+                    });
+                    if(unread > 0) { badge.innerText = unread; badge.style.display = 'block'; }
+                    else badge.style.display = 'none';
+                });
+
+                // 3. تحميل المنشورات بالتفاعلات
+                const qPosts = query(collection(db, "posts"), where("authorId", "==", user.uid));
+                onSnapshot(qPosts, (snap) => {
+                    const postsDiv = document.getElementById('postsList');
+                    postsDiv.innerHTML = snap.empty ? "لم تنشر أي شيء بعد" : "";
+                    snap.forEach(doc => {
+                        const p = doc.data();
+                        postsDiv.innerHTML += `
+                            <div class="profile-post-card">
+                                <div style="font-weight:bold">${p.content}</div>
+                                <div class="post-stats">
+                                    👍 ${p.likes?.length || 0} لايك | 💬 ${p.comments?.length || 0} تعليق
+                                </div>
+                                ${p.comments?.length > 0 ? `
+                                    <div class="post-comments-preview">
+                                        <b>التعليقات:</b>
+                                        ${p.comments.map(c => `<div>• ${c.userName}: ${c.text}</div>`).join('')}
+                                    </div>
+                                ` : ''}
+                            </div>
+                        `;
+                    });
+                });
+            } else { window.location.href = "index.html"; }
+        });
+
+        document.getElementById('saveBtn').onclick = async () => {
+            const btn = document.getElementById('saveBtn');
+            btn.disabled = true;
+            await setDoc(doc(db, "users", auth.currentUser.uid), {
+                name: document.getElementById('nameInput').value.trim(),
+                bio: document.getElementById('bioInput').value.trim(),
+                photo: document.getElementById('imgUrlInput').value.trim()
+            }, { merge: true });
+            location.reload();
+        };
+    </script>
+</body>
+</html>
